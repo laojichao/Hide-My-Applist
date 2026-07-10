@@ -118,14 +118,14 @@ class HMAService(val pms: IPackageManager) : IHMAService.Stub() {
             if (it.flags and ApplicationInfo.FLAG_SYSTEM != 0) it.packageName else null
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            frameworkHooks.add(PmsHookTarget34(this))
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             frameworkHooks.add(PmsHookTarget33(this))
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             frameworkHooks.add(PmsHookTarget30(this))
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            frameworkHooks.add(PmsHookTarget28(this))
         } else {
-            frameworkHooks.add(PmsHookLegacy(this))
+            frameworkHooks.add(PmsHookTarget28(this))
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
